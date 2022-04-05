@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SpotMe2</string>
+    <string name="permissions">Allow Permissions</string>
+</resources>
