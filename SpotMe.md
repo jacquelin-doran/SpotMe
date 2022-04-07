@@ -10,3 +10,9 @@ Nearby Connections can be used to create:
 * Local Multiplayer Gaming: Utilize peer-to-peer connections to play a game that others nearby can join.
 * Multi-Screen Gaming: Using your phone or tablet as a game controller and a screen or projector as the game display. Think Kahoot!
 * Offline File Transfer: Share photos, videos, or any other type of data quickly and indepentant of a network connection.
+
+How Nearby Connections works
+
+### Getting Started
+### Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
+### Summary And Resources
