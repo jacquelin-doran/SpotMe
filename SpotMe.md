@@ -46,9 +46,9 @@ public void onConnectionInitiated(String endpointId, ConnectionInfo info) {
 *ConnectionLifecycleCallback.onConnectionResult()* is invoked once both sides have responded to the connection request. Upon acception, the *ConnectionResolution* provided in the callback will return succesful, indicating the connection is considered established, and the transfer of Payloads (data) can begin.
 
 **Exchanging Data**: The connection is now established, so there is no longer need for the Advertiser vs. Discoverer distinction. Both sides can now exchange data via the *Payload* object. *Payload* objects can be:
-* *Bytes* Byte arrays with upper limit size of 32k; used to encapsulate metadata or control messages.
-* *File* Files of size any; transfered from the application to the network interface with minimal file copying across boundaries.
-* *Strean* A stream of any size; usually generated on the fly, as in the case of recorded audio/video.
+* *Bytes*: Byte arrays with upper limit size of 32k; used to encapsulate metadata or control messages.
+* *File*: Files of size any; transfered from the application to the network interface with minimal file copying across boundaries.
+* *Stream*: A stream of any size; usually generated on the fly, as in the case of recorded audio/video.
 
 Send a *Payload* object via the *sendPayload()* invokation. The *sendPayload()* method guarantees in-order delivery, so multiple *sendPayload()* method calls will be queued until the first *Payload* is done.
 Receivers can expect the *PayloadCallback.onPayloadReceived()* to be invoked every time an incoming *Payload* is received.
