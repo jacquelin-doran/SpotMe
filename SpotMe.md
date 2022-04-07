@@ -53,6 +53,9 @@ public void onConnectionInitiated(String endpointId, ConnectionInfo info) {
 Send a *Payload* object via the *sendPayload()* invokation. The *sendPayload()* method guarantees in-order delivery, so multiple *sendPayload()* method calls will be queued until the first *Payload* is done.
 Receivers can expect the *PayloadCallback.onPayloadReceived()* to be invoked every time an incoming *Payload* is received.
 Both the Sender(s) and Receiver(s) in the connection can expect the *PayloadCallback.onPayloadTransferUpdate()* callback to be used for progress updates on both outgoing and incoming *Payloads*, respectively.
+
+**Disconnect From Connection**: To disconnect from the connection, invoke either the *disconnectFromEndpoint()* method which disconnects from a specified enpoint, or the *stopAllEndpoints()* method which disconnects from all connected endpoints. Call *ConnectionLifecycleCallback.onDisconnected()* to notify remote endpoints of the disconnection.
+
 ## Getting Started
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
 ## Summary And Resources
