@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -49,10 +50,15 @@ class MainActivity : AppCompatActivity() {
         println(resultCode)
 
         val bluetooth = findViewById<Button>(R.id.permissions)
+        val start = findViewById<Button>(R.id.start)
 
         bluetooth.setOnClickListener { v ->
             checkPermission()
             println("Button pressed")
+        }
+        start.setOnClickListener { v ->
+            val intent = Intent(this@MainActivity, MapActivity::class.java)
+            startActivityForResult(intent, 1)
         }
     }
 
