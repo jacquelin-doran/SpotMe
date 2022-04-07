@@ -1,3 +1,3 @@
 
-## How To Use The Nearby Connections API To Make Connections To Other Devices Connected Through Bluetooth
+## Using Nearby Connections API To Connect Devices Through Bluetooth
 ### Overview
