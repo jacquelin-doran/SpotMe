@@ -15,12 +15,34 @@ Nearby Connections can be used to create:
 The Nearby Connections API falls into two phases: pre-connection and post-connection. In the pre-connection phase, the Advertiser (device to be connected) advertises themself as looking for a connection request, while Discoverers (device making the connection) sends a connection request to the advertiser. Connection requests from a Discoverer to and Advertiser initiates a symmetric authentication flow resutling in both sides independently accepting or rejection the connection request. A connect is established once both sides accept the connection request.
 
 **Advertising and Discovery**
-On the Advertiser side, begin by invoking the * *startAdvertising()* * method, which takes a * *ConnectionLifecycleCallback* * that is notified whenever a Discoverer wants to connect via the * *onConnectionInitiated()* * callback.
-On the Discoverer side, begin by invoking the * *startDiscovery()* * method, which takes an * *EndpointDiscoveryCallback* * that is notified whenever a nearby Advertiser is found via the * *onEndpointFound()* * callback.
+On the Advertiser side, begin by invoking the *startAdvertising()* method, which takes a *ConnectionLifecycleCallback* that is notified whenever a Discoverer wants to connect via the *onConnectionInitiated()* callback.
+On the Discoverer side, begin by invoking the *startDiscovery()* method, which takes an *EndpointDiscoveryCallback* that is notified whenever a nearby Advertiser is found via the *onEndpointFound()* callback.
 
 **Establishing Connections**
-
-
+When the Discoverer wants to make a connection to a nearby Advertiser, the Discoverer invokes *requestConnection()*, passing its own *ConnectionLifecycleCallback*.
+Both sides, via the *ConnectionLifecycleCallback.onConnectionInitiated()* callback, are notified of the connection initation process and most now choose whether to accept or deny the connection request via either the *acceptConnection()* and *rejectConnection()* methods.
+Apps are able to optionally prompt the user to accept the connection, or have this process done automatically. To alert the user in an *AlertDialog*, use the following override function:
+'''
+@Override
+public void onConnectionInitiated(String endpointId, ConnectionInfo info) {
+  new AlertDialog.Builder(context)
+      .setTitle("Accept connection to " + info.getEndpointName())
+      .setMessage("Confirm the code matches on both devices: " + info.getAuthenticationDigits())
+      .setPositiveButton(
+          "Accept",
+          (DialogInterface dialog, int which) ->
+              // The user confirmed, so we can accept the connection.
+              Nearby.getConnectionsClient(context)
+                  .acceptConnection(endpointId, payloadCallback))
+      .setNegativeButton(
+          android.R.string.cancel,
+          (DialogInterface dialog, int which) ->
+              // The user canceled, so we should reject the connection.
+              Nearby.getConnectionsClient(context).rejectConnection(endpointId))
+      .setIcon(android.R.drawable.ic_dialog_alert)
+      .show();
+}
+'''
 ## Getting Started
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
 ## Summary And Resources
