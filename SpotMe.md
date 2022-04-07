@@ -1,2 +1,3 @@
 
-# SpotMe
+## How To Use The Nearby Connections API
+_________________________________________
