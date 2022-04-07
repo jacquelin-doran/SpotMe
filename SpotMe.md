@@ -22,7 +22,8 @@ On the Discoverer side, begin by invoking the *startDiscovery()* method, which t
 When the Discoverer wants to make a connection to a nearby Advertiser, the Discoverer invokes *requestConnection()*, passing its own *ConnectionLifecycleCallback*.
 Both sides, via the *ConnectionLifecycleCallback.onConnectionInitiated()* callback, are notified of the connection initation process and most now choose whether to accept or deny the connection request via either the *acceptConnection()* and *rejectConnection()* methods.
 Apps are able to optionally prompt the user to accept the connection, or have this process done automatically. To alert the user in an *AlertDialog*, use the following override function:
-```@Override
+```
+@Override
 public void onConnectionInitiated(String endpointId, ConnectionInfo info) {
   new AlertDialog.Builder(context)
       .setTitle("Accept connection to " + info.getEndpointName())
