@@ -49,6 +49,7 @@ public void onConnectionInitiated(String endpointId, ConnectionInfo info) {
 * *Bytes* Byte arrays with upper limit size of 32k; used to encapsulate metadata or control messages.
 * *File* Files of size any; transfered from the application to the network interface with minimal file copying across boundaries.
 * *Strean* A stream of any size; usually generated on the fly, as in the case of recorded audio/video.
+
 Send a *Payload* object via the *sendPayload()* invokation. The *sendPayload()* method guarantees in-order delivery, so multiple *sendPayload()* method calls will be queued until the first *Payload* is done.
 ## Getting Started
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
