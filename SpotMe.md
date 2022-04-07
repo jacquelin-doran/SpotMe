@@ -11,8 +11,11 @@ Nearby Connections can be used to create:
 * Multi-Screen Gaming: Using your phone or tablet as a game controller and a screen or projector as the game display. Think Kahoot!
 * Offline File Transfer: Share photos, videos, or any other type of data quickly and indepentant of a network connection.
 
-### API Overview
+### API Rundown
 The Nearby Connections API falls into two phases: pre-connection and post-connection. In the pre-connection phase, the Advertiser (device to be connected) advertises themself as looking for a connection request, while Discoverers (device making the connection) sends a connection request to the advertiser. Connection requests from a Discoverer to and Advertiser initiates a symmetric authentication flow resutling in both sides independently accepting or rejection the connection request. A connect is established once both sides accept the connection request.
+
+**Advertising and Discovery**
+On the Advertiser side, begin by invoking the 
 
 ## Getting Started
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
