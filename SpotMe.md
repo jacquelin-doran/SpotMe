@@ -15,7 +15,11 @@ Nearby Connections can be used to create:
 The Nearby Connections API falls into two phases: pre-connection and post-connection. In the pre-connection phase, the Advertiser (device to be connected) advertises themself as looking for a connection request, while Discoverers (device making the connection) sends a connection request to the advertiser. Connection requests from a Discoverer to and Advertiser initiates a symmetric authentication flow resutling in both sides independently accepting or rejection the connection request. A connect is established once both sides accept the connection request.
 
 **Advertising and Discovery**
-On the Advertiser side, begin by invoking the 
+On the Advertiser side, begin by invoking the * *startAdvertising()* * method, which takes a * *ConnectionLifecycleCallback* * that is notified whenever a Discoverer wants to connect via the * *onConnectionInitiated()* * callback.
+On the Discoverer side, begin by invoking the * *startDiscovery()* * method, which takes an * *EndpointDiscoveryCallback* * that is notified whenever a nearby Advertiser is found via the * *onEndpointFound()* * callback.
+
+**Establishing Connections**
+
 
 ## Getting Started
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
