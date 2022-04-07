@@ -51,6 +51,8 @@ public void onConnectionInitiated(String endpointId, ConnectionInfo info) {
 * *Strean* A stream of any size; usually generated on the fly, as in the case of recorded audio/video.
 
 Send a *Payload* object via the *sendPayload()* invokation. The *sendPayload()* method guarantees in-order delivery, so multiple *sendPayload()* method calls will be queued until the first *Payload* is done.
+Receivers can expect the *PayloadCallback.onPayloadReceived()* to be invoked every time an incoming *Payload* is received.
+Both the Sender(s) and Receiver(s) in the connection can expect the *PayloadCallback.onPayloadTransferUpdate()* callback to be used for progress updates on both outgoing and incoming *Payloads*, respectively.
 ## Getting Started
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
 ## Summary And Resources
