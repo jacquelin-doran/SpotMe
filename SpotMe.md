@@ -1,3 +1,6 @@
 
-## How To Use The Nearby Connections API
+## How To Use The Nearby Connections API 
+_________________________________________
+
+### Overview
 _________________________________________
