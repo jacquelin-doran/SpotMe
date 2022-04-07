@@ -43,6 +43,8 @@ public void onConnectionInitiated(String endpointId, ConnectionInfo info) {
       .show();
 }
 ```
+*ConnectionLifecycleCallback.onConnectionResult()* is invoked once both sides have responded to the connection request. Upon acception, the *ConnectionResolution* provided in the callback will return succesful, indicating the connection is considered established, and the transfer of Payloads (data) can begin.
+
 ## Getting Started
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
 ## Summary And Resources
