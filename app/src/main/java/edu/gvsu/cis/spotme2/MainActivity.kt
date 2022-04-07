@@ -57,9 +57,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun checkPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE)
             == PackageManager.PERMISSION_GRANTED){
             Toast.makeText(this, "You have already granted this permission", Toast.LENGTH_SHORT).show()
+            requestStoragePermission()
         }
                 //use api that requires permission
                 //enable bluetooth()?
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 //            explainPermissions() -> {
 
             else {
-                requestStoragePermission();
+                requestStoragePermission()
             //requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH)
             }
         }
