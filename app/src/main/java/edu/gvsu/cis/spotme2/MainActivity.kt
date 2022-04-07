@@ -15,11 +15,26 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.nearby.Nearby
+import com.google.android.gms.nearby.connection.AdvertisingOptions
+import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback
 import com.google.android.gms.nearby.connection.Strategy
 
 class MainActivity : AppCompatActivity() {
     private val PERMISSION_CODE = 1
     private val STRATEGY = Strategy.P2P_CLUSTER
+//    private var startAdvertising() {
+//        var advertisingOptions = AdvertisingOptions.Builder().setStrategy(STRATEGY).build()
+//        Nearby.getConnectionsClient(this)
+//            .startAdvertising(localClassName, "edu.gvsu.cis.spotme2", ConnectionLifecycleCallback, AdvertisingOptions)
+//            .addOnSuccessListener(
+//                (var unused) -> {
+//
+//                })
+//            .addOnFailureListener(
+//                (Exception e) -> {
+//
+//                })
+//    }
 //    val requestPermissionLauncher =
 //        registerForActivityResult(ActivityResultContracts.RequestPermission())
 //        { isGranted: Boolean ->

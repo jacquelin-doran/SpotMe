@@ -16,5 +16,4 @@ class MapActivity : AppCompatActivity() {
         setContentView(R.layout.activity_map)
 
     }
-
 }
