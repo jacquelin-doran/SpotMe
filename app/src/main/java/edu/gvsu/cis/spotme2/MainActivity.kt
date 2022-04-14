@@ -166,7 +166,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-
     fun explainPermissions(): Boolean {
         println("Allow Permissions")
         val accepted = true
