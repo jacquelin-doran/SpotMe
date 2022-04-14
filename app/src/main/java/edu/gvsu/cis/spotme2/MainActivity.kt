@@ -65,8 +65,8 @@ class MainActivity : AppCompatActivity() {
             //checkPermission()
             //allPermissionsGranted()
             println("Button pressed")
-//            val intent = Intent(this@MainActivity, WorkoutActivity::class.java)
-//            startActivityForResult(intent, 1)
+            val intent = Intent(this@MainActivity, WorkoutActivity::class.java)
+            startActivityForResult(intent, 1)
         }
 //        start.setOnClickListener { v ->
 //            val intent = Intent(this@MainActivity, WorkoutActivity::class.java)
