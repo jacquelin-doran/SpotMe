@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,26 +16,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.nearby.Nearby
-import com.google.android.gms.nearby.connection.AdvertisingOptions
-import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback
-import com.google.android.gms.nearby.connection.Strategy
+import com.google.android.gms.nearby.connection.*
+import java.lang.Exception
+import java.sql.Connection
 
 class MainActivity : AppCompatActivity() {
     private val PERMISSION_CODE = 1
     private val STRATEGY = Strategy.P2P_CLUSTER
-//    private var startAdvertising() {
-//        var advertisingOptions = AdvertisingOptions.Builder().setStrategy(STRATEGY).build()
-//        Nearby.getConnectionsClient(this)
-//            .startAdvertising(localClassName, "edu.gvsu.cis.spotme2", ConnectionLifecycleCallback, AdvertisingOptions)
-//            .addOnSuccessListener(
-//                (var unused) -> {
-//
-//                })
-//            .addOnFailureListener(
-//                (Exception e) -> {
-//
-//                })
-//    }
 //    val requestPermissionLauncher =
 //        registerForActivityResult(ActivityResultContracts.RequestPermission())
 //        { isGranted: Boolean ->
@@ -107,6 +95,18 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSION_CODE)
         }
      }
+    private fun startAdvertising() {
+        val advertisingOptions = AdvertisingOptions.Builder().setStrategy(STRATEGY).build()
+        Nearby.getConnectionsClient(this)
+            .startAdvertising(localClassName, "edu.gvsu.cis.spotme2",
+                connectionLifecycleCallback, advertisingOptions)
+            .addOnSuccessListener {
+                a: Void? ->  Log.v("Nearby", "addOnSuccessListener")
+            }
+        .addOnFailureListener{
+            a : Exception? -> Log.v("Nearby", "addOnFailureListener")
+        }
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -122,7 +122,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    private val connectionLifecycleCallback = object : ConnectionLifecycleCallback(){
+        override fun onConnectionInitiated(p0: String, p1: ConnectionInfo) {
+            Log.v("Nearby", "onConnectionIniated")
+        }
+
+        override fun onConnectionResult(p0: String, p1: ConnectionResolution) {
+            Log.v("Nearby", "onConnectionResults")
+        }
+
+        override fun onDisconnected(p0: String) {
+            Log.v("Nearby", "onDisconnected")
+        }
+    }
 }
+
 
     fun explainPermissions(): Boolean {
         println("Allow Permissions")
