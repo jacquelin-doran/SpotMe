@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpotMe2">
         <activity
-            android:name=".MapActivity"
+            android:name=".WorkoutActivity"
             android:exported="false"
             android:label="@string/title_activity_map"
             android:theme="@style/Theme.SpotMe2.NoActionBar" />

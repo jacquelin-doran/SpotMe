@@ -1,7 +1,6 @@
 package edu.gvsu.cis.spotme2
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -11,14 +10,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.*
 import java.lang.Exception
-import java.sql.Connection
 
 class MainActivity : AppCompatActivity() {
     private val PERMISSION_CODE = 1
@@ -60,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             println("Button pressed")
         }
         start.setOnClickListener { v ->
-            val intent = Intent(this@MainActivity, MapActivity::class.java)
+            val intent = Intent(this@MainActivity, WorkoutActivity::class.java)
             startActivityForResult(intent, 1)
         }
     }
