@@ -4,9 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.18385416666666668" />
-        <entry key="..\:/Users/Jacquelin Jimenez/StudioProjects/SpotMe/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/Jacquelin Jimenez/StudioProjects/SpotMe/app/src/main/res/layout/activity_map.xml" value="0.27447916666666666" />
-        <entry key="..\:/Users/Jacquelin Jimenez/StudioProjects/SpotMe/app/src/main/res/layout/content_map.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/BLutt/Desktop/SpotMe/app/src/main/res/layout/activity_map.xml" value="0.1259259259259259" />
+        <entry key="..\:/Users/BLutt/Desktop/SpotMe/app/src/main/res/layout/activity_workout.xml" value="0.27898550724637683" />
+        <entry key="..\:/Users/BLutt/Desktop/SpotMe/app/src/main/res/layout/content_map.xml" value="0.1259259259259259" />
+        <entry key="..\:/Users/BLutt/Desktop/SpotMe/app/src/main/res/layout/content_workout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_map.xml" value="0.23777173913043478" />
         <entry key="app/src/main/res/layout/content_map.xml" value="0.25" />
