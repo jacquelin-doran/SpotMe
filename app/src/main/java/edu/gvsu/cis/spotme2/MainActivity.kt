@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     }
     private val connectionLifecycleCallback = object : ConnectionLifecycleCallback(){
         override fun onConnectionInitiated(p0: String, p1: ConnectionInfo) {
-            Log.v("Nearby", "onConnectionIniated")
+            Log.v("Nearby", "onConnectionInitiated")
         }
 
         override fun onConnectionResult(p0: String, p1: ConnectionResolution) {
