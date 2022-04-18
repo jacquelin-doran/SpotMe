@@ -9,6 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <!--Color palette for the application -->
+    <!--All Buttons are Royal Blue -->
+    <!--All Titles are Red-->
     <color name="whale_blue">#6497BF</color>
     <color name="light_blue">#9FCBEE</color>
     <color name="royal_blue">#01016F</color>

@@ -23,6 +23,7 @@
         android:layout_marginStart="164dp"
         android:layout_marginTop="28dp"
         android:text="Activity Form"
+        android:textColor="@color/red"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,11 +52,12 @@
     <EditText
         android:id="@+id/nameText"
         android:layout_width="376dp"
-        android:layout_height="37dp"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:hint="@string/text_box_fill"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/armsBox"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,10 +132,11 @@
     <EditText
         android:id="@+id/lengthText"
         android:layout_width="376dp"
-        android:layout_height="37dp"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="@string/text_box_fill"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/workoutLengthField" />
@@ -145,6 +148,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="@string/text_box_fill"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notesField" />
@@ -155,6 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="158dp"
         android:layout_marginTop="57dp"
+        android:backgroundTint="@color/royal_blue"
         android:text="Next"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notesText" />

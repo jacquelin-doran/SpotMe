@@ -53,11 +53,10 @@ class MainActivity : AppCompatActivity() {
         println(resultCode)
 
         val bluetooth = findViewById<Button>(R.id.permissions)
-        val start = findViewById<Button>(R.id.start)
 
         bluetooth.setOnClickListener { v ->
             if(allPermissionsGranted()){
-                Log.v("Nearby Connections" , "Permissions Ok")
+                println("Permissions Ok")
             } else {
                 Log.v("Nearby Connections", "No permissions")
                 ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, PERMISSION_CODE)
@@ -66,12 +65,9 @@ class MainActivity : AppCompatActivity() {
             //allPermissionsGranted()
             println("Button pressed")
             val intent = Intent(this@MainActivity, WorkoutActivity::class.java)
-            startActivityForResult(intent, 1)
+            startActivity(intent)
         }
-//        start.setOnClickListener { v ->
-//            val intent = Intent(this@MainActivity, WorkoutActivity::class.java)
-//            startActivityForResult(intent, 1)
-//        }
+
     }
     private fun allPermissionsGranted(): Boolean{
         for(permission in REQUIRED_PERMISSIONS){

@@ -1,7 +1,9 @@
 package edu.gvsu.cis.spotme2
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelLazy
@@ -29,8 +31,12 @@ class WorkoutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         JodaTimeAndroid.init(this)
         setContentView(R.layout.activity_workout)
-        //startAdvertising()
-        //startDiscovery()
+
+        val next = findViewById<Button>(R.id.nextButton)
+        next.setOnClickListener {v ->
+            val intent = Intent(this@WorkoutActivity, AdvertisingActivity::class.java)
+            startActivity(intent)
+        }
 
         fun onCheckboxClicked(view: View) {
             if (view is CheckBox) {
