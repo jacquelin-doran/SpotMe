@@ -21,6 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpotMe2">
         <activity
+            android:name=".AdvertisingActivity"
+            android:exported="false"
+            android:label="@string/activity_advertising"
+            android:theme="@style/Theme.SpotMe2.NoActionBar" />
+        <activity
             android:name=".WorkoutActivity"
             android:exported="false"
             android:label="@string/title_activity_map"
