@@ -59,13 +59,14 @@ class MainActivity : AppCompatActivity() {
                 println("Permissions Ok")
             } else {
                 Log.v("Nearby Connections", "No permissions")
-                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, PERMISSION_CODE)
+                //ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, PERMISSION_CODE)
+                requestStoragePermission()
             }
             //checkPermission()
             //allPermissionsGranted()
             println("Button pressed")
-            val intent = Intent(this@MainActivity, WorkoutActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this@MainActivity, WorkoutActivity::class.java)
+//            startActivity(intent)
         }
 
     }
@@ -97,29 +98,29 @@ class MainActivity : AppCompatActivity() {
 //            //requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH)
 //            }
 //        }
-//    private fun requestStoragePermission(){
-//        val positivButtonClick = { dialog: DialogInterface, which: Int ->
-//            Toast.makeText(applicationContext,
-//                "Yes", Toast.LENGTH_SHORT).show()
-//            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.BLUETOOTH), 1)
-//        }
-//        val negativeButtonClick = { dialog: DialogInterface, which: Int ->
-//            Toast.makeText(applicationContext,
-//                "No", Toast.LENGTH_SHORT).show()
-//            dialog.dismiss()
-//        }
-//        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH)){
-//            AlertDialog.Builder(this)
-//                .setTitle("Permission Needed")
-//                .setMessage("This permission is needed because I said so")
-//                .setPositiveButton("Ok", DialogInterface.OnClickListener(function = positivButtonClick))
-//                .setNegativeButton("Cancel", negativeButtonClick)
-//        }
-//        else {
-//            ActivityCompat.requestPermissions(this,
-//                arrayOf(Manifest.permission.BLUETOOTH), PERMISSION_CODE)
-//        }
-//     }
+    private fun requestStoragePermission(){
+        val positivButtonClick = { dialog: DialogInterface, which: Int ->
+            Toast.makeText(applicationContext,
+                "Yes", Toast.LENGTH_SHORT).show()
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.BLUETOOTH), 1)
+        }
+        val negativeButtonClick = { dialog: DialogInterface, which: Int ->
+            Toast.makeText(applicationContext,
+                "No", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH)){
+            AlertDialog.Builder(this)
+                .setTitle("Permission Needed")
+                .setMessage("This permission is needed because I said so")
+                .setPositiveButton("Ok", DialogInterface.OnClickListener(function = positivButtonClick))
+                .setNegativeButton("Cancel", negativeButtonClick)
+        }
+        else {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.BLUETOOTH), PERMISSION_CODE)
+        }
+     }
     private fun startAdvertising() {
         val advertisingOptions = AdvertisingOptions.Builder().setStrategy(STRATEGY).build()
         Nearby.getConnectionsClient(this)

@@ -38,59 +38,6 @@ class WorkoutActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        fun onCheckboxClicked(view: View) {
-            if (view is CheckBox) {
-                val checked: Boolean = view.isChecked
-
-                when (view.id) {
-                    R.id.backBox -> {
-                        if (checked) {
-                            backBool = true
-                        }
-                    }
-                    R.id.legBox -> {
-                        if (checked) {
-                            legBool = true
-                        }
-                    }
-                    R.id.armsBox -> {
-                        if (checked) {
-                            armBool = true
-                        }
-                    }
-                    R.id.shoulderBox -> {
-                        if (checked) {
-                            shoulderBool = true
-                        }
-                    }
-                    R.id.chestBox -> {
-                        if (checked) {
-                            chestBool = true
-                        }
-                    }
-                    R.id.cardioBox -> {
-                        if (checked) {
-                            cardioBool = true
-                        }
-                    }
-                    R.id.nameText -> {
-                        if(R.id.nameText.toString() != ""){
-                            nameString = R.id.nameText.toString()
-                        }
-                    }
-                    R.id.lengthText -> {
-                        if(R.id.lengthText.toString() != ""){
-                            lengthString = R.id.lengthText.toString()
-                        }
-                    }
-                    R.id.notesText -> {
-                        if(R.id.notesText.toString() != ""){
-                            noteString = R.id.notesText.toString()
-                        }
-                    }
-                }
-            }
-        }
 
         class WorkoutObject {
             val ITEMS: MutableList<WorkoutObject> = ArrayList()
@@ -130,6 +77,59 @@ class WorkoutActivity : AppCompatActivity() {
                         workoutString += "Extra Notes About Today's Workout: $noteString \n"
                     }
                     return workoutString + " " + DateTime.now()
+                }
+            }
+        }
+    }
+    fun onCheckboxClicked(view: View) {
+        if (view is CheckBox) {
+            val checked: Boolean = view.isChecked
+
+            when (view.id) {
+                R.id.backBox -> {
+                    if (checked) {
+                        backBool = true
+                    }
+                }
+                R.id.legBox -> {
+                    if (checked) {
+                        legBool = true
+                    }
+                }
+                R.id.armsBox -> {
+                    if (checked) {
+                        armBool = true
+                    }
+                }
+                R.id.shoulderBox -> {
+                    if (checked) {
+                        shoulderBool = true
+                    }
+                }
+                R.id.chestBox -> {
+                    if (checked) {
+                        chestBool = true
+                    }
+                }
+                R.id.cardioBox -> {
+                    if (checked) {
+                        cardioBool = true
+                    }
+                }
+                R.id.nameText -> {
+                    if(R.id.nameText.toString() != ""){
+                        nameString = R.id.nameText.toString()
+                    }
+                }
+                R.id.lengthText -> {
+                    if(R.id.lengthText.toString() != ""){
+                        lengthString = R.id.lengthText.toString()
+                    }
+                }
+                R.id.notesText -> {
+                    if(R.id.notesText.toString() != ""){
+                        noteString = R.id.notesText.toString()
+                    }
                 }
             }
         }
