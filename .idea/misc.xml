@@ -16,9 +16,13 @@
         <entry key="..\:/Users/Jacquelin Jimenez/StudioProjects/SpotMe/app/src/main/res/layout/fragment_first.xml" value="0.10507246376811594" />
         <entry key="..\:/Users/Jacquelin Jimenez/StudioProjects/SpotMe/app/src/main/res/layout/fragment_first2.xml" value="0.20244565217391305" />
         <entry key="..\:/Users/Jacquelin Jimenez/StudioProjects/SpotMe/app/src/main/res/layout/fragment_second.xml" value="0.20520833333333333" />
+        <entry key="app/src/main/res/layout/activity_advertising.xml" value="0.11822916666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_map.xml" value="0.23777173913043478" />
+        <entry key="app/src/main/res/layout/activity_workout.xml" value="0.11822916666666666" />
+        <entry key="app/src/main/res/layout/content_advertising.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/content_map.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/content_workout.xml" value="0.11822916666666666" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.24583333333333332" />
       </map>

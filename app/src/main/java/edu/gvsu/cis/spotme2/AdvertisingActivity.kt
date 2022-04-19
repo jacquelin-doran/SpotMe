@@ -3,6 +3,7 @@ package edu.gvsu.cis.spotme2
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -15,6 +16,8 @@ import java.lang.Exception
 
 class AdvertisingActivity : AppCompatActivity() {
     private val STRATEGY = Strategy.P2P_CLUSTER
+    var ITEMS = ArrayList<String>()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +26,16 @@ class AdvertisingActivity : AppCompatActivity() {
         //startAdvertising()
         //startDiscovery()
 
+        val plan = findViewById<TextView>(R.id.editTextTextPersonName)
+
+        if(intent.hasExtra("Plans")){
+            ITEMS = intent.getStringArrayListExtra("Plans") as ArrayList<String>
+        }
+
         val advertise = findViewById<Button>(R.id.advertiseButton)
 
         advertise.setOnClickListener { v ->
+            plan.setText(ITEMS.get(0))
             startAdvertising()
         }
 
