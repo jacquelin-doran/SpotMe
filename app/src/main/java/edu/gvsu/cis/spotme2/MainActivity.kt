@@ -65,8 +65,8 @@ class MainActivity : AppCompatActivity() {
             //checkPermission()
             //allPermissionsGranted()
             println("Button pressed")
-//            val intent = Intent(this@MainActivity, WorkoutActivity::class.java)
-//            startActivity(intent)
+            val intent = Intent(this@MainActivity, WorkoutActivity::class.java)
+            startActivity(intent)
         }
 
     }
@@ -121,18 +121,7 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(Manifest.permission.BLUETOOTH), PERMISSION_CODE)
         }
      }
-    private fun startAdvertising() {
-        val advertisingOptions = AdvertisingOptions.Builder().setStrategy(STRATEGY).build()
-        Nearby.getConnectionsClient(this)
-            .startAdvertising(localClassName, "edu.gvsu.cis.spotme2",
-                connectionLifecycleCallback, advertisingOptions)
-            .addOnSuccessListener {
-                a: Void? ->  Log.v("Nearby", "addOnSuccessListener")
-            }
-        .addOnFailureListener{
-            a : Exception? -> Log.v("Nearby", "addOnFailureListener")
-        }
-    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -148,19 +137,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private val connectionLifecycleCallback = object : ConnectionLifecycleCallback(){
-        override fun onConnectionInitiated(p0: String, p1: ConnectionInfo) {
-            Log.v("Nearby", "onConnectionInitiated")
-        }
 
-        override fun onConnectionResult(p0: String, p1: ConnectionResolution) {
-            Log.v("Nearby", "onConnectionResults")
-        }
-
-        override fun onDisconnected(p0: String) {
-            Log.v("Nearby", "onDisconnected")
-        }
-    }
 }
 
     fun explainPermissions(): Boolean {
