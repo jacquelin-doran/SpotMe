@@ -14,7 +14,7 @@ import net.danlew.android.joda.JodaTimeAndroid
 import org.joda.time.DateTime
 import java.io.Serializable
 
-class WorkoutActivity : AppCompatActivity() {
+class WorkoutActivity : AppCompatActivity(), Serializable  {
 
     var backBool: Boolean = false
     var legBool: Boolean = false
@@ -55,23 +55,16 @@ class WorkoutActivity : AppCompatActivity() {
             plan.toString()
             ITEMS.add(plan)
             val intent = Intent(this@WorkoutActivity, AdvertisingActivity::class.java)
-            //intent.putExtra("Plans", ArrayList(ITEMS))
+            intent.putExtra("Plans", ArrayList(ITEMS))
             startActivityForResult(intent, 1)
         }
 
         }
 
 
-//        class WorkoutObject {
-//            val ITEMS: MutableList<WorkoutObject> = ArrayList()
-//
-//            fun addItem(item: WorkoutObject) {
-//                ITEMS.add(item)
-//            }
-
             inner class WorkoutObject(var backBool: Boolean, var legBool: Boolean,
              var armBool: Boolean, var shoulderBool: Boolean, var chestBool: Boolean, var cardioBool: Boolean,
-             var nameString: String, var noteString: String)
+             var nameString: String, var noteString: String) : Serializable
             {
                 override fun toString(): String {
                     var workoutString = "$nameString's Workout Plan: "

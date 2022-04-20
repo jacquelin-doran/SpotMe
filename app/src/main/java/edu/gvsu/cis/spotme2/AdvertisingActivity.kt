@@ -56,17 +56,17 @@ class AdvertisingActivity : AppCompatActivity() {
             }
     }
 
-//    private fun startDiscovery() {
-//        val discoveryOptions = DiscoveryOptions.Builder().setStrategy(STRATEGY).build()
-//        Nearby.getConnectionsClient(this)
-//            .startDiscovery(localClassName, , discoveryOptions)
-//            .addOnSuccessListener { a: Void? ->
-//                Log.v("Nearby", "addOnSuccessDiscovery")
-//            }
-//            .addOnFailureListener { a: Exception? ->
-//                Log.v("Nearby", "addOnFailureListener")
-//            }
-//    }
+    private fun startDiscovery() {
+        val discoveryOptions = DiscoveryOptions.Builder().setStrategy(STRATEGY).build()
+        Nearby.getConnectionsClient(this)
+            .startDiscovery(localClassName, endpointDiscoveryCallback, discoveryOptions)
+            .addOnSuccessListener { a: Void? ->
+                Log.v("Nearby", "addOnSuccessDiscovery")
+            }
+            .addOnFailureListener { a: Exception? ->
+                Log.v("Nearby", "addOnFailureListener")
+            }
+    }
 
     private val connectionLifecycleCallback = object : ConnectionLifecycleCallback() {
         override fun onConnectionInitiated(p0: String, p1: ConnectionInfo) {
@@ -82,26 +82,25 @@ class AdvertisingActivity : AppCompatActivity() {
         }
     }
 
-//    private val EndpointDiscoveryCallback = object : EndpointDiscoveryCallback() {
-//        override fun onEndpointFound(endpointId: String, info: DiscoveredEndpointInfo) {
-//            // An endpoint was found. We request a connection to it.
-//            //debug("mEndpointDiscoveryCallback.onEndpointFound $endpointId:$info:${info.endpointName}")
-////
-////            mConnectionsClient.requestConnection(
-////                getNickName(),
-////                endpointId,
-////                mConnectionLifecycleCallback
-////            )
-//                .addOnSuccessListener {
-//                    // We successfully requested a connection. Now both sides
-//                    // must accept before the connection is established.
-//                    //debug("Success requestConnection: $it")
-//                }
-//                .addOnFailureListener {
-//                    // Nearby Connections failed to request the connection.
-//                    // TODO: retry
-//                    //debug("Failure requestConnection: $it")
-//                }
-//        }
-//    }
+    private val endpointDiscoveryCallback = object : EndpointDiscoveryCallback() {
+        override fun onEndpointFound(endpointId: String, info: DiscoveredEndpointInfo) {
+            // An endpoint was found. We request a connection to it.
+                Nearby.getConnectionsClient(this@AdvertisingActivity)
+                 .requestConnection(localClassName, endpointId, connectionLifecycleCallback)
+                 .addOnSuccessListener { a: Void? ->
+                    // We successfully requested a connection. Now both sides
+                    // must accept before the connection is established.
+                    //debug("Success requestConnection: $it")
+                }
+                .addOnFailureListener { a: Exception? ->
+                    // Nearby Connections failed to request the connection.
+                    // TODO: retry
+                    //debug("Failure requestConnection: $it")
+                }
+        }
+
+        override fun onEndpointLost(p0: String) {
+            TODO("Not yet implemented")
+        }
+    }
 }
