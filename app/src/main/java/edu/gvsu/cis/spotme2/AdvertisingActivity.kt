@@ -26,16 +26,17 @@ class AdvertisingActivity : AppCompatActivity() {
         //startAdvertising()
         //startDiscovery()
 
-        val plan = findViewById<TextView>(R.id.editTextTextPersonName)
+        val plan = findViewById<TextView>(R.id.textView4)
 
         if(intent.hasExtra("Plans")){
-            ITEMS = intent.getStringArrayListExtra("Plans") as ArrayList<String>
+            plan.text = intent.getStringExtra("Plans")
+            //ITEMS = intent.getStringArrayListExtra("Plans") as ArrayList<String>
         }
 
         val advertise = findViewById<Button>(R.id.advertiseButton)
 
         advertise.setOnClickListener { v ->
-            plan.setText(ITEMS.get(0))
+            //plan.text = ITEMS[0]
             startAdvertising()
         }
 

@@ -52,10 +52,10 @@ class WorkoutActivity : AppCompatActivity(), Serializable  {
             lengthString = length.text.toString()
 
             val plan = WorkoutObject(backBool,legBool,armBool,shoulderBool, chestBool, cardioBool, nameString, noteString)
-            plan.toString()
-            ITEMS.add(plan)
+            val planString = plan.toString()
+            //ITEMS.add(plan)
             val intent = Intent(this@WorkoutActivity, AdvertisingActivity::class.java)
-            intent.putExtra("Plans", ArrayList(ITEMS))
+            intent.putExtra("Plans", planString)
             startActivityForResult(intent, 1)
         }
 
