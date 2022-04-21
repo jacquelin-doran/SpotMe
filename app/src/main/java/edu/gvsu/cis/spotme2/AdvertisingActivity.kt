@@ -10,13 +10,19 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.*
 import java.lang.Exception
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets.UTF_8
+import java.sql.Connection
+import kotlin.text.Charsets.UTF_8
 
 class AdvertisingActivity : AppCompatActivity() {
     private val STRATEGY = Strategy.P2P_CLUSTER
     var ITEMS = ArrayList<String>()
+    var remoteEndpointId: String? = null
 
 
 
@@ -70,12 +76,31 @@ class AdvertisingActivity : AppCompatActivity() {
     }
 
     private val connectionLifecycleCallback = object : ConnectionLifecycleCallback() {
-        override fun onConnectionInitiated(p0: String, p1: ConnectionInfo) {
-            Log.v("Nearby", "onConnectionInitiated")
+        override fun onConnectionInitiated(endpointId: String, connectionInfo: ConnectionInfo) {
+            //Automatically accept the connection on both sides.
+            Nearby.getConnectionsClient(this@AdvertisingActivity).acceptConnection(endpointId, payloadCallback)
+            println("Nearby onConnectionInitiated")
         }
 
-        override fun onConnectionResult(p0: String, p1: ConnectionResolution) {
+        override fun onConnectionResult(endpointId: String, result: ConnectionResolution) {
             Log.v("Nearby", "onConnectionResults")
+            when(result.status.statusCode){
+                ConnectionsStatusCodes.STATUS_OK -> {
+                    //we're connected!
+                    remoteEndpointId = endpointId
+                    Log.v("Connection Status", "Success")
+                    //TODO Make sendString method
+                    //sendString("Hello ${remoteEndpointId}")
+                }
+                ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED -> {
+                    //connection rejected
+
+                    Log.v("Connection Status", "Rejected")
+                }
+                ConnectionsStatusCodes.STATUS_ERROR -> {
+                    Log.v("Connection Status", "Error")
+                }
+            }
         }
 
         override fun onDisconnected(p0: String) {
@@ -83,6 +108,32 @@ class AdvertisingActivity : AppCompatActivity() {
         }
     }
 
+    private val payloadCallback = object : PayloadCallback(){
+        override fun onPayloadReceived(endpointId: String, payload: Payload) {
+            debug("payloadCallback.onPayloadRecieved $endpointId")
+
+            when(payload.type){
+                Payload.Type.BYTES ->{
+                    val data = payload.asBytes()!!
+                    debug("Payload.Type.Bytes: $data")
+                }
+                Payload.Type.FILE -> {
+                    val file = payload.asFile()!!
+                    debug("Payload.Type.File : $file")
+                }
+                Payload.Type.STREAM -> {
+                    val stream = payload.asStream()!!
+                    debug("Payload.Type.STREAM : $stream")
+                }
+
+            }
+        }
+
+        override fun onPayloadTransferUpdate(endpoinId: String, update: PayloadTransferUpdate) {
+            //Bytes payloads are sent as a single chunck
+            //after the call to onPayloadRecieved
+        }
+    }
     private val endpointDiscoveryCallback = object : EndpointDiscoveryCallback() {
         override fun onEndpointFound(endpointId: String, info: DiscoveredEndpointInfo) {
             // An endpoint was found. We request a connection to it.
@@ -103,5 +154,9 @@ class AdvertisingActivity : AppCompatActivity() {
         override fun onEndpointLost(p0: String) {
             TODO("Not yet implemented")
         }
+    }
+
+    private fun debug(message :String){
+        Log.v("",message)
     }
 }
