@@ -118,10 +118,20 @@ The following steps show how to use the *RequestPermission* contract. The proces
   2. To display the system permissions dialog when necessary, call the [launch()](https://developer.android.com/reference/androidx/activity/result/ActivityResultLauncher#launch(I)) method on the instance of ActivityResultLauncher that you saved in the previous step. After launch() is called, the system permissions dialog appears. When the user makes a choice, the system asynchronously invokes your implementation of ActivityResultCallback, which you defined in the previous step.
 ### Advertise and Discover
 Choose a Strategy. Strategies determine the connection topology for your app ie: one advertiser to N discoverers, M advertisers to N discoverers etc.
+
 On devices that will advertise, invoke the *startAdvertising()* method with the intended target *Strategy*, and a *serviceId* parameter that identifies your app.
+
 On devices that will discover the nearby Advertisers, call *startDiscovery()* with the same target *Strategy* and *serviceId*.
+
 The *serviceId* value identifies your app. It is industry standard to use the package name of your app (com.google.example.myapp).
 
 *ADVERTISE CODE TODO*
 
+The *ConnectionLifecycleCallback* is a callback that is invoked when discoverers request to connect to an advertiser. Learn how to define callbacks [here](https://developers.google.com/nearby/connections/android/manage-connections)
+
+*DISCOVERY CODE TODO*
+
+The *EndpointDiscoveryCallback* is a callback that is invoked when nearby advertisers are either discovered or lost. Learn how to define callbacks [here](https://developers.google.com/nearby/connections/android/manage-connections)
+
+Call *stopAdvertising()* to stop advertising, and *stopDiscovery()* to stop discovering.
 ## Summary And Resources
