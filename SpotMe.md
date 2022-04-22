@@ -63,7 +63,25 @@ Both the Sender(s) and Receiver(s) in the connection can expect the *PayloadCall
 * *[Nearby Connections API](https://github.com/android/connectivity-samples)*
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
 ### Request Permissions
-We must begin by selecting an appropriate permissions for the *Strategy* we inted to use. We will be using the *P2P_Cluster* Strategy. Add the specified permissions to your AndroidManifest.xml as such:
+We must begin by selecting an appropriate permissions for the *Strategy* we inted to use. We will be using the *P2P_Cluster* Strategy. In order to use this Strategy, Location must be turned on and the app must have the following permissions declared:
+
+    * BLUETOOTH
+    * BLUETOOTH_ADMIN
+    * ACCESS_WIFI_STATE
+    * CHANGE_WIFI_STATE
+    * ACCESS_COARSE_LOCATION
+
+On devices running Q (and onwards), FINE_LOCATION is required in place of COARSE location.
+
+    * ACCESS_FINE_LOCATION
+
+Additionally, on devices running S (and onwards), replace BLUETOOTH and BLUETOOTH_ADMIN permissions with the following:
+
+    * BLUETOOTH_ADVERTISE
+    * BLUETOOTH_CONNECT
+    * BLUETOOTH_SCAN
+
+Add the prior explained permissions to your AndroidManifest.xml as such:
 ```
 <!-- Required for Nearby Connections -->
 <uses-permission android:name="android.permission.BLUETOOTH" />
