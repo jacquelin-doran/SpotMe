@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         private val REQUIRED_PERMISSIONS = arrayOf(
         "android.permission.ACCESS_WIFI_STATE",
         "android.permission.CHANGE_WIFI_STATE",
+        "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.BLUETOOTH_ADVERTISE",
@@ -75,6 +76,9 @@ class MainActivity : AppCompatActivity() {
         val bluetooth = findViewById<Button>(R.id.permissions)
 
         bluetooth.setOnClickListener { v ->
+            for (permission in REQUIRED_PERMISSIONS){
+                checkPermission(permission)
+            }
 //            if(allPermissionsGranted()){
 //               println("Permissions Ok")
 //            } else {

@@ -42,8 +42,8 @@ class AdvertisingActivity : AppCompatActivity() {
         val advertise = findViewById<Button>(R.id.advertiseButton)
 
         advertise.setOnClickListener { v ->
-            //plan.text = ITEMS[0]
             startAdvertising()
+            startDiscovery()
         }
 
     }
