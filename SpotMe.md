@@ -58,8 +58,9 @@ Both the Sender(s) and Receiver(s) in the connection can expect the *PayloadCall
 
 ## Getting Started
 ### What You Will Need
-* *Android Studios*: Version 32
-* *Google Play Services SDK*
+* *[Android Studios: Version 32](https://developer.android.com/studio#downloads)*
+* *[Google Play Services SDK](https://developer.android.com/google/play-services/setup.html)*
 * *[Nearby Connections API](https://github.com/android/connectivity-samples)*
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
+
 ## Summary And Resources
