@@ -1,11 +1,15 @@
 package edu.gvsu.cis.spotme2
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -42,12 +46,30 @@ class AdvertisingActivity : AppCompatActivity() {
         val advertise = findViewById<Button>(R.id.advertiseButton)
 
         advertise.setOnClickListener { v ->
+            requestFineLocationPermission()
             startAdvertising()
             startDiscovery()
         }
 
     }
 
+    private fun requestFineLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            Log.i("info", "No fine location permissions")
+
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                1
+            )
+        }
+    }
     private fun startAdvertising() {
         val advertisingOptions = AdvertisingOptions.Builder().setStrategy(STRATEGY).build()
         Nearby.getConnectionsClient(this)
@@ -56,17 +78,17 @@ class AdvertisingActivity : AppCompatActivity() {
                 connectionLifecycleCallback, advertisingOptions
             )
             .addOnSuccessListener { a: Void? ->
-                Log.v("Nearby", "addOnSuccessListener")
+                Log.v("Nearby ADVERTISE", "addOnSuccessListener")
             }
             .addOnFailureListener { a: Exception? ->
-                Log.v("Nearby", "addOnFailureListener")
+                Log.v("Nearby ADVERTISE", "addOnFailureListener")
             }
     }
 
     private fun startDiscovery() {
         val discoveryOptions = DiscoveryOptions.Builder().setStrategy(STRATEGY).build()
         Nearby.getConnectionsClient(this)
-            .startDiscovery(localClassName, endpointDiscoveryCallback, discoveryOptions)
+            .startDiscovery("edu.gvsu.cis.spotme2", endpointDiscoveryCallback, discoveryOptions)
             .addOnSuccessListener { a: Void? ->
                 Log.v("Nearby", "addOnSuccessDiscovery")
             }

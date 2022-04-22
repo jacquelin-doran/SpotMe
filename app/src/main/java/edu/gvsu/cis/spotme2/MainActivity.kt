@@ -34,14 +34,8 @@ class MainActivity : AppCompatActivity() {
         private val REQUIRED_PERMISSIONS = arrayOf(
         "android.permission.ACCESS_WIFI_STATE",
         "android.permission.CHANGE_WIFI_STATE",
-        "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.ACCESS_FINE_LOCATION",
-        "android.permission.BLUETOOTH_ADVERTISE",
-        "android.permission.BLUETOOTH_CONNECT",
-        "android.permission.BLUETOOTH_SCAN",
-        "android.permission.READ_EXTERNAL_STORAGE"
-    )
+        "android.permission.READ_EXTERNAL_STORAGE")
+
     private val bluetoothAdapter: BluetoothAdapter by lazy {
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothManager.adapter
@@ -115,24 +109,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-//    private fun allPermissionsGranted(): Boolean{
-//        for(permission in REQUIRED_PERMISSIONS){
-//            if(ContextCompat.checkSelfPermission(
-//                    this, permission) != PackageManager.PERMISSION_GRANTED)
-//            {
-//                requestStoragePermission(permission)
-//            }
-//        }
-//        return true
-//    }
 
     fun checkPermission(permission: String){
-        //Always comes out to permission granted
         when {
             ContextCompat.checkSelfPermission(this, permission)
                     == PackageManager.PERMISSION_GRANTED -> {
                 Toast.makeText(this, "You have already granted this permission", Toast.LENGTH_SHORT)
                     .show()
+                println("Permission granted $permission")
                 //requestStoragePermission()
             }
             //use api that requires permission
@@ -142,43 +126,74 @@ class MainActivity : AppCompatActivity() {
 //            explainPermissions() -> {
 
             else -> {
-                //requestStoragePermission()
                 requestPermissionLauncher.launch(permission)
             }
         }
     }
 
-    private fun requestStoragePermission(permission: String) {
-        val positivButtonClick = { dialog: DialogInterface, which: Int ->
-            Toast.makeText(
-                applicationContext,
-                "Yes", Toast.LENGTH_SHORT
-            ).show()
-            ActivityCompat.requestPermissions(this, arrayOf(permission), 1)
-        }
-        val negativeButtonClick = { dialog: DialogInterface, which: Int ->
-            Toast.makeText(
-                applicationContext,
-                "No", Toast.LENGTH_SHORT
-            ).show()
-            dialog.dismiss()
-        }
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-            AlertDialog.Builder(this)
-                .setTitle("Permission Needed")
-                .setMessage("This permission is needed because I said so")
-                .setPositiveButton(
-                    "Ok",
-                    DialogInterface.OnClickListener(function = positivButtonClick)
-                )
-                .setNegativeButton("Cancel", negativeButtonClick)
-        } else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(permission), PERMISSION_CODE
-            )
-        }
-    }
+//    private fun requestFineLocationPermission() {
+//        if (ContextCompat.checkSelfPermission(
+//                this,
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            )
+//            != PackageManager.PERMISSION_GRANTED
+//        ) {
+//
+//            Log.i("info", "No fine location permissions")
+//
+//            ActivityCompat.requestPermissions(
+//                this,
+//                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+//                1
+//            )
+//        }
+//    }
+//        private fun requestCoarseLocationPermission() {
+//            if (ContextCompat.checkSelfPermission(
+//                    this,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION
+//                )
+//                != PackageManager.PERMISSION_GRANTED
+//            ) {
+//
+//                Log.i("info", "No coarse location permissions")
+//
+//                ActivityCompat.requestPermissions(
+//                    this,
+//                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+//                    1
+//                )
+//            }
+//        }
+//        val positivButtonClick = { dialog: DialogInterface, which: Int ->
+//            Toast.makeText(
+//                applicationContext,
+//                "Yes", Toast.LENGTH_SHORT
+//            ).show()
+//            ActivityCompat.requestPermissions(this, arrayOf(permission), 1)
+//        }
+//        val negativeButtonClick = { dialog: DialogInterface, which: Int ->
+//            Toast.makeText(
+//                applicationContext,
+//                "No", Toast.LENGTH_SHORT
+//            ).show()
+//            dialog.dismiss()
+//        }
+//        if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+//            AlertDialog.Builder(this)
+//                .setTitle("Permission Needed")
+//                .setMessage("This permission is needed because I said so")
+//                .setPositiveButton(
+//                    "Ok",
+//                    DialogInterface.OnClickListener(function = positivButtonClick)
+//                )
+//                .setNegativeButton("Cancel", negativeButtonClick)
+//        } else {
+//            ActivityCompat.requestPermissions(
+//                this,
+//                arrayOf(permission), PERMISSION_CODE
+//            )
+//        }
 
 
     override fun onRequestPermissionsResult(
@@ -197,9 +212,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
-fun explainPermissions(): Boolean {
-        println("Allow Permissions")
-        val accepted = true
-        return accepted
-    }
+//
+//fun explainPermissions(): Boolean {
+//        println("Allow Permissions")
+//        val accepted = true
+//        return accepted
+//    }
