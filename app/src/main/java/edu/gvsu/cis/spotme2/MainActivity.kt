@@ -2,7 +2,13 @@ package edu.gvsu.cis.spotme2
 
 import android.Manifest
 import android.Manifest.permission.*
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
+import android.bluetooth.BluetoothDevice
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,23 +24,33 @@ import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.*
 import java.lang.Exception
+import javax.sql.ConnectionEventListener
 
 class MainActivity : AppCompatActivity() {
     private val PERMISSION_CODE = 1
+    private val ENABLE_BLUETOOTH_REQUEST_CODE = 1
     private val STRATEGY = Strategy.P2P_CLUSTER
 
-    private val REQUIRED_PERMISSIONS = arrayOf(
-        "android.permission.BLUETOOTH",
-        "android.permission.BLUETOOTH_ADMIN",
-        "android.permission.ACCESS_WIFI_STATE",
-        "android.permission.CHANGE_WIFI_STATE",
-        "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.ACCESS_FINE_LOCATION",
-        "android.permission.BLUETOOTH_ADVERTISE",
-        "android.permission.BLUETOOTH_CONNECT",
-        "android.permission.BLUETOOTH_SCAN",
-        "android.permission.READ_EXTERNAL_STORAGE"
-    )
+    //    private val REQUIRED_PERMISSIONS = arrayOf(
+//        "android.permission.BLUETOOTH",
+//        "android.permission.BLUETOOTH_ADMIN",
+//        "android.permission.ACCESS_WIFI_STATE",
+//        "android.permission.CHANGE_WIFI_STATE",
+//        "android.permission.ACCESS_COARSE_LOCATION",
+//        "android.permission.ACCESS_FINE_LOCATION",
+//        "android.permission.BLUETOOTH_ADVERTISE",
+//        "android.permission.BLUETOOTH_CONNECT",
+//        "android.permission.BLUETOOTH_SCAN",
+//        "android.permission.READ_EXTERNAL_STORAGE"
+//    )
+    private val bluetoothAdapter: BluetoothAdapter by lazy {
+        val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        bluetoothManager.adapter
+    }
+
+    private val bleScanner by lazy {
+        bluetoothAdapter.bluetoothLeScanner
+    }
 
     val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission())
@@ -48,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                 //explain
             }
         }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +91,31 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        promptEnableBluetooth()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun promptEnableBluetooth() {
+        val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+        if (!bluetoothAdapter.isEnabled) {
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(enableBtIntent, ENABLE_BLUETOOTH_REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode){
+            ENABLE_BLUETOOTH_REQUEST_CODE -> {
+                if (resultCode != Activity.RESULT_OK){
+                    promptEnableBluetooth()
+                }
+            }
+        }
     }
 //    private fun allPermissionsGranted(): Boolean{
 //        for(permission in REQUIRED_PERMISSIONS){
@@ -107,30 +149,38 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private fun requestSomePermission(){
+
+    private fun requestSomePermission() {
         val positivButtonClick = { dialog: DialogInterface, which: Int ->
-            Toast.makeText(applicationContext,
-                "Yes", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                applicationContext,
+                "Yes", Toast.LENGTH_SHORT
+            ).show()
             ActivityCompat.requestPermissions(this, arrayOf(BLUETOOTH_ADMIN), 1)
         }
         val negativeButtonClick = { dialog: DialogInterface, which: Int ->
-            Toast.makeText(applicationContext,
-                "No", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                applicationContext,
+                "No", Toast.LENGTH_SHORT
+            ).show()
             dialog.dismiss()
         }
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, BLUETOOTH_ADMIN)){
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, BLUETOOTH_ADMIN)) {
             AlertDialog.Builder(this)
                 .setTitle("Permission Needed")
                 .setMessage("This permission is needed because I said so")
-                .setPositiveButton("Ok", DialogInterface.OnClickListener(function = positivButtonClick))
+                .setPositiveButton(
+                    "Ok",
+                    DialogInterface.OnClickListener(function = positivButtonClick)
+                )
                 .setNegativeButton("Cancel", negativeButtonClick)
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(BLUETOOTH), PERMISSION_CODE
+            )
         }
-        else {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(BLUETOOTH), PERMISSION_CODE)
-        }
-     }
-
+    }
 
 
     override fun onRequestPermissionsResult(
@@ -139,10 +189,10 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == PERMISSION_CODE){
-            if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == PERMISSION_CODE) {
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "PERMISSION GRANTED", Toast.LENGTH_SHORT).show()
-            } else{
+            } else {
                 Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT)
             }
         }
@@ -150,7 +200,7 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-    fun explainPermissions(): Boolean {
+fun explainPermissions(): Boolean {
         println("Allow Permissions")
         val accepted = true
         return accepted
