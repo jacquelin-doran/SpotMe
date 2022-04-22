@@ -62,5 +62,21 @@ Both the Sender(s) and Receiver(s) in the connection can expect the *PayloadCall
 * *[Google Play Services SDK](https://developer.android.com/google/play-services/setup.html)*
 * *[Nearby Connections API](https://github.com/android/connectivity-samples)*
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
-
+### Request Permissions
+We must begin by selecting an appropriate permissions for the *Strategy* we inted to use. We will be using the *P2P_Cluster* Strategy. Add the specified permissions to your AndroidManifest.xml as such:
+```
+<!-- Required for Nearby Connections -->
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<!-- Only required for apps targeting Android 12 and higher -->
+<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+<!-- Optional: only required for FILE payloads -->
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+```
 ## Summary And Resources
