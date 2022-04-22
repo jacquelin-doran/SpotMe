@@ -141,4 +141,7 @@ After the discover has requested a connection to an advertiser, both sides are n
 
 Both sides at this point can either accept or reject the connection, utilizing the *acceptConnection() and *rejectConnection()* to do so. The connection is symmetric, meaning both sides must accept to confirm the connection. Once a connection is accepted, the result is delivered to the *onConnectionResult()*
 Implement the callback as such: *CONNECTIONLIFECYCLECALLBACK CODE TODO*
+The connection must now be authenticaled by using the authentication token provied to *onConnectionInitiated()*. Both devices are given the same token. Verifying the token usually involves showing the token on both devices and manually comparing the two strings, similar to a bluetooth pairing dialog.
+*ONCONNECTIONINITIATED CODE TODO*
+### Exchanging Data
 ## Summary And Resources
