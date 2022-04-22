@@ -97,4 +97,19 @@ Add the prior explained permissions to your AndroidManifest.xml as such:
 <!-- Optional: only required for FILE payloads -->
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 ```
+To allow the system to manage the request code that's associated with a permissions request, add dependencies on the following libraries in your module's build.gradle file:
+
+    * [androidx.activity](https://developer.android.com/jetpack/androidx/releases/activity#declaring_dependencies), version 1.2.0 or later.
+    * [androidx.fragment](https://developer.android.com/jetpack/androidx/releases/fragment#declaring_dependencies), version 1.3.0 or later.
+
+You can then use one of the following classes:
+
+    To request a single permission, use [RequestPermission](https://developer.android.com/reference/androidx/activity/result/contract/ActivityResultContracts.RequestPermission).
+    To request multiple permissions at the same time, use [RequestMultiplePermissions](https://developer.android.com/reference/androidx/activity/result/contract/ActivityResultContracts.RequestMultiplePermissions).
+
+The following steps show how to use the *RequestPermission* contract. The process is nearly the same for the *RequestMultiplePermissions* contract.
+
+    1. In your activity or fragment's initialization logic, pass in an implementation of [ActivityResultCallback](https://developer.android.com/reference/androidx/activity/result/ActivityResultCallback) into a call to [registerForActivityResult()](https://developer.android.com/reference/androidx/activity/result/ActivityResultCaller#registerForActivityResult(androidx.activity.result.contract.ActivityResultContract%3CI,%20O%3E,%20androidx.activity.result.ActivityResultCallback%3CO%3E)). The ActivityResultCallback defines how your app handles the user's response to the permission request. Keep a reference to the return value of registerForActivityResult(), which is of type ActivityResultLauncher.
+
+    2. To display the system permissions dialog when necessary, call the [launch()](https://developer.android.com/reference/androidx/activity/result/ActivityResultLauncher#launch(I)) method on the instance of ActivityResultLauncher that you saved in the previous step. After launch() is called, the system permissions dialog appears. When the user makes a choice, the system asynchronously invokes your implementation of ActivityResultCallback, which you defined in the previous step.
 ## Summary And Resources
