@@ -26,21 +26,23 @@ import kotlin.text.Charsets.UTF_8
 class AdvertisingActivity : AppCompatActivity() {
     private val STRATEGY = Strategy.P2P_CLUSTER
     var ITEMS = ArrayList<String>()
-    var remoteEndpointId: String? = null
+    var remoteEndpointId: String = ""
+    lateinit var connectionsClient: ConnectionsClient
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_advertising)
-        //startAdvertising()
-        //startDiscovery()
+
 
         val plan = findViewById<TextView>(R.id.textView4)
 
         if(intent.hasExtra("Plans")){
             plan.text = intent.getStringExtra("Plans")
-            //ITEMS = intent.getStringArrayListExtra("Plans") as ArrayList<String>
+            var item = intent.getStringExtra("Plans")
+            item = "$item"
+            ITEMS.add(item)
         }
 
         val advertise = findViewById<Button>(R.id.advertiseButton)
@@ -111,8 +113,8 @@ class AdvertisingActivity : AppCompatActivity() {
                     //we're connected!
                     remoteEndpointId = endpointId
                     Log.v("Connection Status", "Success")
-                    //TODO Make sendString method
-                    //sendString("Hello ${remoteEndpointId}")
+                    sendString("Hello")
+
                 }
                 ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED -> {
                     //connection rejected
@@ -130,6 +132,10 @@ class AdvertisingActivity : AppCompatActivity() {
         }
     }
 
+    private fun sendString(content: String){
+        connectionsClient.sendPayload(remoteEndpointId,
+        Payload.fromBytes(content.toByteArray()))
+    }
     private val payloadCallback = object : PayloadCallback(){
         override fun onPayloadReceived(endpointId: String, payload: Payload) {
             debug("payloadCallback.onPayloadRecieved $endpointId")
@@ -139,15 +145,14 @@ class AdvertisingActivity : AppCompatActivity() {
                     val data = payload.asBytes()!!
                     debug("Payload.Type.Bytes: $data")
                 }
-                Payload.Type.FILE -> {
-                    val file = payload.asFile()!!
-                    debug("Payload.Type.File : $file")
-                }
-                Payload.Type.STREAM -> {
-                    val stream = payload.asStream()!!
-                    debug("Payload.Type.STREAM : $stream")
-                }
-
+//                Payload.Type.FILE -> {
+//                    val file = payload.asFile()!!
+//                    debug("Payload.Type.File : $file")
+//                }
+//                Payload.Type.STREAM -> {
+//                    val stream = payload.asStream()!!
+//                    debug("Payload.Type.STREAM : $stream")
+//                }
             }
         }
 

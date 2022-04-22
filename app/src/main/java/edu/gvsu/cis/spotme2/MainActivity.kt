@@ -117,7 +117,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "You have already granted this permission", Toast.LENGTH_SHORT)
                     .show()
                 println("Permission granted $permission")
-                //requestStoragePermission()
             }
             //use api that requires permission
             //enable bluetooth()?
@@ -131,40 +130,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private fun requestFineLocationPermission() {
-//        if (ContextCompat.checkSelfPermission(
-//                this,
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            )
-//            != PackageManager.PERMISSION_GRANTED
-//        ) {
-//
-//            Log.i("info", "No fine location permissions")
-//
-//            ActivityCompat.requestPermissions(
-//                this,
-//                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-//                1
-//            )
-//        }
-//    }
-//        private fun requestCoarseLocationPermission() {
-//            if (ContextCompat.checkSelfPermission(
-//                    this,
-//                    Manifest.permission.ACCESS_COARSE_LOCATION
-//                )
-//                != PackageManager.PERMISSION_GRANTED
-//            ) {
-//
-//                Log.i("info", "No coarse location permissions")
-//
-//                ActivityCompat.requestPermissions(
-//                    this,
-//                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-//                    1
-//                )
-//            }
-//        }
+
 //        val positivButtonClick = { dialog: DialogInterface, which: Int ->
 //            Toast.makeText(
 //                applicationContext,
@@ -212,9 +178,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-//
-//fun explainPermissions(): Boolean {
-//        println("Allow Permissions")
-//        val accepted = true
-//        return accepted
-//    }
