@@ -137,7 +137,7 @@ Call *stopAdvertising()* to stop advertising, and *stopDiscovery()* to stop disc
 ### Manage Connections/Initiate A Connection
 When nearby devices are found, the discoverer can initiate connections. 
 *ENDPOINTDISCOVERYCALLBACK CODE TODO*
-After the discover ha requested a connection to an advertiser, both sides are notified of the connection initiated process via the onConnectioninitiated() method defined in the *ConnectionLifecycleCallback* callback. The callback is passed to the advertiser's startAdvertising() method and the discoverer's *requestConnection()* respectively. 
+After the discover has requested a connection to an advertiser, both sides are notified of the connection initiated process via the onConnectioninitiated() method defined in the *ConnectionLifecycleCallback* callback. The callback is passed to the advertiser's startAdvertising() method and the discoverer's *requestConnection()* respectively. 
 
 Both sides at this point can either accept or reject the connection, utilizing the *acceptConnection() and *rejectConnection()* to do so. The connection is symmetric, meaning both sides must accept to confirm the connection. Once a connection is accepted, the result is delivered to the *onConnectionResult()*
 Implement the callback as such: *CONNECTIONLIFECYCLECALLBACK CODE TODO*
