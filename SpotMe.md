@@ -57,5 +57,7 @@ Both the Sender(s) and Receiver(s) in the connection can expect the *PayloadCall
 **Disconnect From Connection**: To disconnect from the connection, invoke either the *disconnectFromEndpoint()* method which disconnects from a specified enpoint, or the *stopAllEndpoints()* method which disconnects from all connected endpoints. Call *ConnectionLifecycleCallback.onDisconnected()* to notify remote endpoints of the disconnection.
 
 ## Getting Started
+### What You Will Need
+
 ## Step-By-Step Instructions: Create a File Sharing App Using Nearby Connections
 ## Summary And Resources
