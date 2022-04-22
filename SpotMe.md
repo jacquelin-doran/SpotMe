@@ -97,6 +97,10 @@ Add the prior explained permissions to your AndroidManifest.xml as such:
 <!-- Optional: only required for FILE payloads -->
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 ```
+ACCESS_FINE_LOCATION, BLUETOOTH_ADVERTISE, BLUETOOTH_CONNECT, BLUETOOTH_SCAN and READ_EXTERNAL_STORAGE are considered to be dangerous system permissions, so in addition to adding them to your manifest, you must request these permissions at runtime
+
+If the user does not grant all required permissions for the Strategy you plan to use, the Nearby Connections API will refuse to allow your app to start advertising or discovering.
+
 To allow the system to manage the request code that's associated with a permissions request, add dependencies on the following libraries in your module's build.gradle file:
 
    * [androidx.activity](https://developer.android.com/jetpack/androidx/releases/activity#declaring_dependencies), version 1.2.0 or later.
