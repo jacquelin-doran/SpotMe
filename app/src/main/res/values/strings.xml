@@ -17,6 +17,10 @@
     <string name="spot_me_description">An application to help you find an exercise partner</string>
     <string name="advertising_title">Find An Exercise Partner</string>
     <string name="go_text">Go!</string>
+    <string name="advertise">Be a spotter</string>
+    <string name="discover">Find a spotter</string>
+    <string name="hostTitle">Your workout plan</string>
+    <string name="partnerTitle">Partner workout plan</string>
     <string name="text_box_fill">Write something here...</string>
     <string name="start">Start</string>
     <string name="permissions_description">This will start the app and allow permissions</string>

@@ -6,29 +6,19 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.*
+import org.w3c.dom.Text
 import java.lang.Exception
-import java.nio.charset.Charset
-import java.nio.charset.StandardCharsets.UTF_8
-import java.sql.Connection
-import kotlin.text.Charsets.UTF_8
 
 class AdvertisingActivity : AppCompatActivity() {
     private val STRATEGY = Strategy.P2P_CLUSTER
     var ITEMS = ArrayList<String>()
     var remoteEndpointId: String = ""
-    lateinit var connectionsClient: ConnectionsClient
-
+    var partner = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,23 +26,33 @@ class AdvertisingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_advertising)
 
 
-        val plan = findViewById<TextView>(R.id.textView4)
+        val partnerPlan = findViewById<TextView>(R.id.partnerPlan)
+        val hostPlan = findViewById<TextView>(R.id.advertisePlan3)
 
         if(intent.hasExtra("Plans")){
-            plan.text = intent.getStringExtra("Plans")
+            hostPlan.text = intent.getStringExtra("Plans")
             var item = intent.getStringExtra("Plans")
             item = "$item"
             ITEMS.add(item)
         }
 
         val advertise = findViewById<Button>(R.id.advertiseButton)
+        val discover = findViewById<Button>(R.id.discoverButton)
 
         advertise.setOnClickListener { v ->
             requestFineLocationPermission()
             startAdvertising()
+
+        }
+        discover.setOnClickListener{ v ->
+            requestFineLocationPermission()
             startDiscovery()
         }
 
+    }
+    fun updateTextView(string : String){
+        val partnerPlan = findViewById<TextView>(R.id.partnerPlan)
+        partnerPlan.text = string
     }
 
     private fun requestFineLocationPermission() {
@@ -113,7 +113,7 @@ class AdvertisingActivity : AppCompatActivity() {
                     //we're connected!
                     remoteEndpointId = endpointId
                     Log.v("Connection Status", "Success")
-                    sendString("Hello")
+                    sendString(ITEMS[0])
 
                 }
                 ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED -> {
@@ -133,17 +133,22 @@ class AdvertisingActivity : AppCompatActivity() {
     }
 
     private fun sendString(content: String){
-        connectionsClient.sendPayload(remoteEndpointId,
+       Nearby.getConnectionsClient(this).sendPayload(remoteEndpointId,
         Payload.fromBytes(content.toByteArray()))
+        Log.v("Send String", "$content")
     }
     private val payloadCallback = object : PayloadCallback(){
         override fun onPayloadReceived(endpointId: String, payload: Payload) {
+            Log.v("Payload", "$payload")
             debug("payloadCallback.onPayloadRecieved $endpointId")
 
             when(payload.type){
                 Payload.Type.BYTES ->{
                     val data = payload.asBytes()!!
-                    debug("Payload.Type.Bytes: $data")
+                    val string = String(data)
+                    partner = string
+                    updateTextView(string)
+                    debug("Payload.Type.Bytes: $string")
                 }
 //                Payload.Type.FILE -> {
 //                    val file = payload.asFile()!!
@@ -159,6 +164,7 @@ class AdvertisingActivity : AppCompatActivity() {
         override fun onPayloadTransferUpdate(endpoinId: String, update: PayloadTransferUpdate) {
             //Bytes payloads are sent as a single chunck
             //after the call to onPayloadRecieved
+
         }
     }
     private val endpointDiscoveryCallback = object : EndpointDiscoveryCallback() {
