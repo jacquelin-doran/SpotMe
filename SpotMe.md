@@ -276,8 +276,9 @@ private val payloadCallback = object : PayloadCallback(){
 ```
 Due to the fact *sendString* is called within the *onConnectionResult* which is inside of the *connectionLifecycleCallback*, only after receiving a status code of "ok", the sending and receiving byte system is now finished.
 
-To send *file* or *stream* payloads, refere [here](https://developers.google.com/nearby/connections/android/exchange-data) to learn how.
+To send *file* or video *stream* payloads, refere [here](https://developers.google.com/nearby/connections/android/exchange-data) to learn how.
 ### Summary
-
+In this tutorial, we have learned about how Advertiser devices and Discovery devices can connect through a bluetooth connection to send data from one device to the other. We have learned how the Advertiser invokes the *startAdvertising* method, and how the Discoverer invokes *requestConnection*. We have defined the *ConnectionLifecycleCallback* and *EndpointDiscoveryCallback*, which are needed during the connection initiation process, and seen how we use them to accept or deny connection requests.
+We have also examined the process for sending a *String* object through the *sendString* method, on how it calls *sendPayload* that is received by the *PayloadCallback's onPayloadReceived*  method.
 ### Resources
 [Nearby Connections API](https://developers.google.com/nearby/connections/overview)
