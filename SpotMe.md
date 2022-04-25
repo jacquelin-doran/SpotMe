@@ -170,17 +170,16 @@ private val endpointDiscoveryCallback = object : EndpointDiscoveryCallback() {
                  .addOnSuccessListener { a: Void? ->
                     // We successfully requested a connection. Now both sides
                     // must accept before the connection is established.
-                    //debug("Success requestConnection: $it")
+                    Log.v("Endpoint", "addOnSuccessListener")
                 }
                 .addOnFailureListener { a: Exception? ->
                     // Nearby Connections failed to request the connection.
-                    // TODO: retry
-                    //debug("Failure requestConnection: $it")
+                    Log.v("Endpoint", "addOnFailureListener")
                 }
         }
 
         override fun onEndpointLost(p0: String) {
-            TODO("Not yet implemented")
+            Log.v("Endpoint", "onEndpointLost")
         }
     }
 ```
@@ -255,15 +254,15 @@ private val payloadCallback = object : PayloadCallback(){
                     val string = String(data)
                     partner = string
                     updateTextView(string)
-                    debug("Payload.Type.Bytes: $string")
+                    Log.v("Payload","Payload.Type.Bytes: $string")
                 }
 //                Payload.Type.FILE -> {
 //                    val file = payload.asFile()!!
-//                    debug("Payload.Type.File : $file")
+//                    Log.v("Payload","Payload.Type.File : $file")
 //                }
 //                Payload.Type.STREAM -> {
 //                    val stream = payload.asStream()!!
-//                    debug("Payload.Type.STREAM : $stream")
+//                    Log.v("Payload","Payload.Type.STREAM : $stream")
 //                }
             }
         }
