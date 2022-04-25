@@ -130,7 +130,7 @@ private fun startAdvertising() {
         val advertisingOptions = AdvertisingOptions.Builder().setStrategy(STRATEGY).build()
         Nearby.getConnectionsClient(this)
             .startAdvertising(
-                localClassName, "edu.gvsu.cis.spotme2",
+                localClassName, "SERVICE_ID",
                 connectionLifecycleCallback, advertisingOptions
             )
             .addOnSuccessListener { a: Void? ->
@@ -149,7 +149,7 @@ The following code from our project is how to start a discovery.
 private fun startDiscovery() {
         val discoveryOptions = DiscoveryOptions.Builder().setStrategy(STRATEGY).build()
         Nearby.getConnectionsClient(this)
-            .startDiscovery("edu.gvsu.cis.spotme2", endpointDiscoveryCallback, discoveryOptions)
+            .startDiscovery(SERVICE_ID, endpointDiscoveryCallback, discoveryOptions)
             .addOnSuccessListener { a: Void? ->
                 Log.v("Nearby", "addOnSuccessDiscovery")
             }
