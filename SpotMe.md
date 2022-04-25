@@ -83,19 +83,17 @@ Additionally, on devices running S (and onwards), replace BLUETOOTH and BLUETOOT
 
 Add the prior explained permissions to your AndroidManifest.xml as such:
 ```
-<!-- Required for Nearby Connections -->
 <uses-permission android:name="android.permission.BLUETOOTH" />
 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<!-- Only required for apps targeting Android 12 and higher -->
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
 <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-<!-- Optional: only required for FILE payloads -->
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" /> <!-- Optional: only required for FILE payloads -->
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 ```
 ACCESS_FINE_LOCATION, BLUETOOTH_ADVERTISE, BLUETOOTH_CONNECT, BLUETOOTH_SCAN and READ_EXTERNAL_STORAGE are considered to be dangerous system permissions, so in addition to adding them to your manifest, you must request these permissions at runtime
 
@@ -125,23 +123,157 @@ On devices that will discover the nearby Advertisers, call *startDiscovery()* wi
 
 The *serviceId* value identifies your app. It is industry standard to use the package name of your app (com.google.example.myapp).
 
-*ADVERTISE CODE TODO*
+The following code sample on how to advertise is from our project. Note that "edu.gvsu.cis.spotme2" is our *serviceId* tag  here.
+
+```
+private fun startAdvertising() {
+        val advertisingOptions = AdvertisingOptions.Builder().setStrategy(STRATEGY).build()
+        Nearby.getConnectionsClient(this)
+            .startAdvertising(
+                localClassName, "edu.gvsu.cis.spotme2",
+                connectionLifecycleCallback, advertisingOptions
+            )
+            .addOnSuccessListener { a: Void? ->
+                Log.v("Nearby ADVERTISE", "addOnSuccessListener")
+            }
+            .addOnFailureListener { a: Exception? ->
+                Log.v("Nearby ADVERTISE", "addOnFailureListener")
+            }
+    }
+```
 
 The *ConnectionLifecycleCallback* is a callback that is invoked when discoverers request to connect to an advertiser. Learn how to define callbacks [here](https://developers.google.com/nearby/connections/android/manage-connections)
 
-*DISCOVERY CODE TODO*
+The following code from our project is how to start a discovery.
+```
+private fun startDiscovery() {
+        val discoveryOptions = DiscoveryOptions.Builder().setStrategy(STRATEGY).build()
+        Nearby.getConnectionsClient(this)
+            .startDiscovery("edu.gvsu.cis.spotme2", endpointDiscoveryCallback, discoveryOptions)
+            .addOnSuccessListener { a: Void? ->
+                Log.v("Nearby", "addOnSuccessDiscovery")
+            }
+            .addOnFailureListener { a: Exception? ->
+                Log.v("Nearby", "addOnFailureListener")
+            }
+    }
+```
 
 The *EndpointDiscoveryCallback* is a callback that is invoked when nearby advertisers are either discovered or lost. Learn how to define callbacks [here](https://developers.google.com/nearby/connections/android/manage-connections)
 
-Call *stopAdvertising()* to stop advertising, and *stopDiscovery()* to stop discovering.
+The following code sample is how we implemented the *EndpointDiscoveryCallback*
+```
+private val endpointDiscoveryCallback = object : EndpointDiscoveryCallback() {
+        override fun onEndpointFound(endpointId: String, info: DiscoveredEndpointInfo) {
+            // An endpoint was found. We request a connection to it.
+                Nearby.getConnectionsClient(this@AdvertisingActivity)
+                 .requestConnection(localClassName, endpointId, connectionLifecycleCallback)
+                 .addOnSuccessListener { a: Void? ->
+                    // We successfully requested a connection. Now both sides
+                    // must accept before the connection is established.
+                    //debug("Success requestConnection: $it")
+                }
+                .addOnFailureListener { a: Exception? ->
+                    // Nearby Connections failed to request the connection.
+                    // TODO: retry
+                    //debug("Failure requestConnection: $it")
+                }
+        }
+
+        override fun onEndpointLost(p0: String) {
+            TODO("Not yet implemented")
+        }
+    }
+```
 ### Manage Connections/Initiate A Connection
 When nearby devices are found, the discoverer can initiate connections. 
-*ENDPOINTDISCOVERYCALLBACK CODE TODO*
+
 After the discover has requested a connection to an advertiser, both sides are notified of the connection initiated process via the onConnectioninitiated() method defined in the *ConnectionLifecycleCallback* callback. The callback is passed to the advertiser's startAdvertising() method and the discoverer's *requestConnection()* respectively. 
 
-Both sides at this point can either accept or reject the connection, utilizing the *acceptConnection() and *rejectConnection()* to do so. The connection is symmetric, meaning both sides must accept to confirm the connection. Once a connection is accepted, the result is delivered to the *onConnectionResult()*
-Implement the callback as such: *CONNECTIONLIFECYCLECALLBACK CODE TODO*
-The connection must now be authenticaled by using the authentication token provied to *onConnectionInitiated()*. Both devices are given the same token. Verifying the token usually involves showing the token on both devices and manually comparing the two strings, similar to a bluetooth pairing dialog.
-*ONCONNECTIONINITIATED CODE TODO*
+Both sides at this point can either accept or reject the connection, utilizing the *acceptConnection() and *rejectConnection()* to do so. The connection is symmetric, meaning both sides must accept to confirm the connection. Once a connection is accepted, the result is delivered to the *onConnectionResult()*.
+The connection must now be authenticated by using the authentication token provied to *onConnectionInitiated()*. Both devices are given the same token. Verifying the token usually involves showing the token on both devices and manually comparing the two strings, similar to a bluetooth pairing dialog.
+
+We implemented the *connectionLifecycleCallback()* as such:
+```
+private val connectionLifecycleCallback = object : ConnectionLifecycleCallback() {
+        override fun onConnectionInitiated(endpointId: String, connectionInfo: ConnectionInfo) {
+            //Automatically accept the connection on both sides.
+            Nearby.getConnectionsClient(this@AdvertisingActivity).acceptConnection(endpointId, payloadCallback)
+            println("Nearby onConnectionInitiated")
+        }
+
+        override fun onConnectionResult(endpointId: String, result: ConnectionResolution) {
+            Log.v("Nearby", "onConnectionResults")
+            when(result.status.statusCode){
+                ConnectionsStatusCodes.STATUS_OK -> {
+                    //we're connected!
+                    remoteEndpointId = endpointId
+                    Log.v("Connection Status", "Success")
+                    sendString(ITEMS[0])
+
+                }
+                ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED -> {
+                    //connection rejected
+
+                    Log.v("Connection Status", "Rejected")
+                }
+                ConnectionsStatusCodes.STATUS_ERROR -> {
+                    Log.v("Connection Status", "Error")
+                }
+            }
+        }
+
+        override fun onDisconnected(p0: String) {
+            Log.v("Nearby", "onDisconnected")
+        }
+    }
+```
 ### Exchanging Data
+The next step after establishing a connection is setting up the system that will exchange data. This is done through *Payload* objects. For our project, we will be using byte payloads to send some sort of message string.
+
+We accomplished this within our *sendString* method invoked in *onConnectionResult* found above in the Managing Connection section.
+
+Our code for the *sendString* method is as follows:
+```
+private fun sendString(content: String){
+    Nearby.getConnectionsClient(this).sendPayload(remoteEndpointId,
+      Payload.fromBytes(content.toByteArray()))
+    Log.v("Send String", "$content")
+}
+```
+We send *Payload* data by utilizing the *sendPayload* method that takes the endpoint ID for its destination, and the payload itself.
+
+To receive byte payloads, we must define the *PayloadCallback* that has the *onPayloadReceived* method.
+```
+private val payloadCallback = object : PayloadCallback(){
+        override fun onPayloadReceived(endpointId: String, payload: Payload) {
+            Log.v("Payload", "$payload")
+            debug("payloadCallback.onPayloadRecieved $endpointId")
+
+            when(payload.type){
+                Payload.Type.BYTES ->{
+                    val data = payload.asBytes()!!
+                    val string = String(data)
+                    partner = string
+                    updateTextView(string)
+                    debug("Payload.Type.Bytes: $string")
+                }
+//                Payload.Type.FILE -> {
+//                    val file = payload.asFile()!!
+//                    debug("Payload.Type.File : $file")
+//                }
+//                Payload.Type.STREAM -> {
+//                    val stream = payload.asStream()!!
+//                    debug("Payload.Type.STREAM : $stream")
+//                }
+            }
+        }
+        override fun onPayloadTransferUpdate(endpoinId: String, update: PayloadTransferUpdate) {
+            //Bytes payloads are sent as a single chunck
+            //after the call to onPayloadRecieved
+
+        }
+    }
+```
+Due to the fact *sendString* is called within the *onConnectionResult* which is inside of the *connectionLifecycleCallback*, only after receiving a status code of "ok", the sending and receiving byte system is now finished.
 ## Summary And Resources
