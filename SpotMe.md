@@ -277,3 +277,4 @@ private val payloadCallback = object : PayloadCallback(){
 ```
 Due to the fact *sendString* is called within the *onConnectionResult* which is inside of the *connectionLifecycleCallback*, only after receiving a status code of "ok", the sending and receiving byte system is now finished.
 ## Summary And Resources
+[Nearby Connections API](https://developers.google.com/nearby/connections/overview)
