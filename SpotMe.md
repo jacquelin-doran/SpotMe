@@ -61,6 +61,8 @@ Both the Sender(s) and Receiver(s) in the connection can expect the *PayloadCall
 * *[Android Studios: Version 32](https://developer.android.com/studio#downloads)*
 * *[Google Play Services SDK](https://developer.android.com/google/play-services/setup.html)*
 * *[Nearby Connections API](https://github.com/android/connectivity-samples)*
+* *An Android device for testing purposes.*
+
 ## Step-By-Step Instructions: Send A String Through A Bluetooth Connection From One Device To Another
 ### Request Permissions
 We must begin by selecting an appropriate permissions for the *Strategy* we inted to use. We will be using the *P2P_Cluster* Strategy. In order to use this Strategy, Location must be turned on and the app must have the following permissions declared:
