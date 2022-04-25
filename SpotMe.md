@@ -123,8 +123,7 @@ On devices that will discover the nearby Advertisers, call *startDiscovery()* wi
 
 The *serviceId* value identifies your app. It is industry standard to use the package name of your app (com.google.example.myapp).
 
-The following code sample on how to advertise is from our project. Note that "edu.gvsu.cis.spotme2" is our *serviceId* tag  here.
-
+The following code sample on how to advertise is from our project.
 ```
 private fun startAdvertising() {
         val advertisingOptions = AdvertisingOptions.Builder().setStrategy(STRATEGY).build()
